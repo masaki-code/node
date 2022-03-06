@@ -1,4 +1,3 @@
-import { Readable } from "stream";
 import path = require("path");
 import * as fs from "fs";
 import * as http from "http";
