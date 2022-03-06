@@ -3,7 +3,7 @@ import path = require("path");
 import * as fs from "fs";
 import * as http from "http";
 
-type Request = http.IncomingMessage | { url: string; headers: any };
+type Request = http.IncomingMessage | { url: string };
 type Response = http.ServerResponse;
 
 const hostname = "127.0.0.1";
@@ -24,23 +24,13 @@ const service = function (req: Request, res: Response) {
       return;
     }
 
-    if (stat.isFile()) {
-      const bytes = fs.readFileSync(file);
-      const stream = Readable.from(bytes);
-      stream.pipe(res);
-      stream.on("close", () => {
-        stream.destroy();
-      });
+    if (stat.isDirectory()) {
+      service({ url: `${req.url}/${indexFile}` }, res);
     }
 
-    if (stat.isDirectory()) {
-      service(
-        {
-          url: `${req.url}/${indexFile}`,
-          headers: req.headers,
-        },
-        res
-      );
+    if (stat.isFile()) {
+      const stream = fs.createReadStream(file);
+      stream.pipe(res);
     }
   });
 };
