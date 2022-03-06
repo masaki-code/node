@@ -8,12 +8,12 @@ type Response = http.ServerResponse;
 
 const hostname = "127.0.0.1";
 const port = 3000;
+const dirPublic = "./server";
 const indexFile = "index.html";
 
 const service = function (req: Request, res: Response) {
   const pathname = req.url;
-
-  const root = path.join(path.resolve("."), "server");
+  const root = path.resolve(dirPublic);
   const file = path.join(root, pathname);
 
   fs.stat(file, (err, stat) => {
