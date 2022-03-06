@@ -8,7 +8,7 @@ type Response = http.ServerResponse;
 
 const hostname = "127.0.0.1";
 const port = 3000;
-const autoIndexFile = "index.html";
+const indexFile = "index.html";
 
 const service = function (req: Request, res: Response) {
   const pathname = req.url;
@@ -36,7 +36,7 @@ const service = function (req: Request, res: Response) {
     if (stat.isDirectory()) {
       service(
         {
-          url: `${req.url}/${autoIndexFile}`,
+          url: `${req.url}/${indexFile}`,
           headers: req.headers,
         },
         res
