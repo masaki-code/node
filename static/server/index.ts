@@ -14,7 +14,7 @@ const service = function (req: Request, res: Response) {
   const pathname = req.url;
 
   const root = path.join(path.resolve("."), "server");
-  let file = path.normalize(path.join(root, pathname));
+  const file = path.join(root, pathname);
 
   fs.stat(file, (err, stat) => {
     if (err) {
@@ -46,10 +46,6 @@ const service = function (req: Request, res: Response) {
 };
 
 const listener = function (req: Request, res: Response) {
-  if (req.url === "/favicon.ico") {
-    return;
-  }
-
   service(req, res);
 };
 
